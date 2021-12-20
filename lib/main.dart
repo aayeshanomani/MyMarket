@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mymarket/adminLogin.dart';
 import 'package:mymarket/homePage.dart';
 
 void main() {
@@ -24,6 +25,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
       ),
       home: HomePage(),
+      routes: {
+        '/login': (context) => AdminLogin(),
+      },
     );
   }
 }
