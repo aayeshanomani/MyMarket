@@ -54,6 +54,14 @@ flutter:
   assets:
     - assets/image/tex.jpg
     - assets/image/ad.jpeg
+    - assets/image/logo.jpeg
+    - assets/image/logoC.jpeg
+    - assets/image/bea.png
+    - assets/image/gro.png
+    - assets/image/lap.png
+    - assets/image/ref.png
+    - assets/image/res.png
+    - assets/image/sta.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
@@ -67,12 +75,16 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+  fonts:
+    - family: Noto_Serif
+      fonts:
+        - asset: assets/font/Noto_Serif/NotoSerif-Bold.ttf
+          weight: 700
+        - asset: assets/font/Noto_Serif/NotoSerif-BoldItalic.ttf
+          weight: 500
+        - asset: assets/font/Noto_Serif/NotoSerif-Italic.ttf
+          style: italic
+        - asset: assets/font/Noto_Serif/NotoSerif-Regular.ttf
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf

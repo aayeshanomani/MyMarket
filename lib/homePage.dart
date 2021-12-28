@@ -60,9 +60,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Color(0xff344966),
       ),
       body: Container(
-        child: Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
-        ),
+        child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
