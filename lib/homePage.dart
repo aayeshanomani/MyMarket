@@ -25,6 +25,7 @@ class _HomePageState extends State<HomePage> {
   static const List<Widget> _widgetOptions = <Widget>[
     Home(),
     Map(),
+    Text("Cart"),
     Text('Profile Page',
         style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold)),
   ];
@@ -72,6 +73,10 @@ class _HomePageState extends State<HomePage> {
             BottomNavigationBarItem(
                 icon: Icon(FontAwesomeIcons.mapMarker),
                 label: 'Map',
+                backgroundColor: Color(0xffE6AACE)),
+            BottomNavigationBarItem(
+                icon: Icon(FontAwesomeIcons.shoppingBag),
+                label: 'Cart',
                 backgroundColor: Color(0xffE6AACE)),
             BottomNavigationBarItem(
               icon: Icon(FontAwesomeIcons.user),
