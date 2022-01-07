@@ -1,5 +1,8 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
+var uid;
+bool isLoggedIn = false;
+
 class HelperFunc {
   static String userNameKey = "USERNAMEKEY";
   static String loggedInKey = "LOGGEDINKEY";
@@ -15,26 +18,22 @@ class HelperFunc {
     return await pref.setString(typeKey, type);
   }
 
-  static Future<bool> saveUserloggedIn(bool isUserLoggedIn) async
-  {
+  static Future<bool> saveUserloggedIn(bool isUserLoggedIn) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     return await pref.setBool(loggedInKey, isUserLoggedIn);
   }
 
-  static Future<String> getUsername() async
-  {
+  static Future<String> getUsername() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     return pref.getString(userNameKey);
   }
 
-  static Future<bool> getUserloggedIn() async
-  {
+  static Future<bool> getUserloggedIn() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     return pref.getBool(loggedInKey);
   }
 
-  static Future<String> getType() async
-  {
+  static Future<String> getType() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     return pref.getString(typeKey);
   }

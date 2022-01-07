@@ -1,11 +1,23 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:mymarket/services/database.dart';
+import 'package:mymarket/services/helper.dart';
 
-class HomeScreen extends StatelessWidget {
-  final FirebaseUser user;
+class HomeScreen extends StatefulWidget {
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
 
-  HomeScreen({this.user});
+class _HomeScreenState extends State<HomeScreen> {
+  var uid;
+
+  @override
+  void initState() {
+    readyState();
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,68 +26,86 @@ class HomeScreen extends StatelessWidget {
         title: Text("Shop Details"),
         backgroundColor: Color(0xffE24E1B),
       ),
-      body: Container(
-        padding: EdgeInsets.all(32),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(child: Image.asset("assets/image/ad.jpeg")),
+      body: StreamBuilder(
+          stream: Database().getDocument(uid),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) return CircularProgressIndicator();
+            return Container(
+              padding: EdgeInsets.all(32),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child:
+                          Container(child: Image.asset("assets/image/ad.jpeg")),
+                    ),
+                  ),
+                  if(snapshot.data.documents[0]["applicant"]==true)
+                  Column(
+                    children: [
+                      SizedBox(
+                    height: 32,
+                  ),
+                  Text(
+                    "Application in progress",
+                    style: TextStyle(color: Color(0xffEF8354), fontSize: 22),
+                  ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 32,
+                  ),
+                  Text(
+                    "Username: ",
+                    style: TextStyle(color: Color(0xffDB995A), fontSize: 22),
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                    snapshot.data.documents[0]["name"],
+                    style: TextStyle(
+                      color: Color(0xff654236),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 32,
+                  ),
+                  Text(
+                    "Phone Number:",
+                    style: TextStyle(color: Color(0xffDB995A), fontSize: 22),
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                    snapshot.data.documents[0]['phoneNumber'],
+                    style: TextStyle(
+                      color: Color(0xff654236),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 32,
+                  ),
+                  Text(
+                    "Aadhar:",
+                    style: TextStyle(color: Color(0xffDB995A), fontSize: 22),
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  Text(
+                    "optional",
+                    style: TextStyle(
+                      color: Color(0xff654236),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            SizedBox(
-              height: 32,
-            ),
-            Text(
-              "Unique ID:",
-              style: TextStyle(color: Color(0xffDB995A), fontSize: 22),
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            Text(
-              "${user.uid}",
-              style: TextStyle(
-                color: Color(0xff654236),
-              ),
-            ),
-            SizedBox(
-              height: 32,
-            ),
-            Text(
-              "Phone Number:",
-              style: TextStyle(color: Color(0xffDB995A), fontSize: 22),
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            Text(
-              "${user.phoneNumber}",
-              style: TextStyle(
-                color: Color(0xff654236),
-              ),
-            ),
-            SizedBox(
-              height: 32,
-            ),
-            Text(
-              "Aadhar:",
-              style: TextStyle(color: Color(0xffDB995A), fontSize: 22),
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            Text(
-              "optional",
-              style: TextStyle(
-                color: Color(0xff654236),
-              ),
-            ),
-          ],
-        ),
-      ),
+            );
+          }),
       drawer: Drawer(
         child: SingleChildScrollView(
           child: Container(
@@ -275,5 +305,12 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> readyState() async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    setState(() {
+      uid = user.uid;
+    });
   }
 }

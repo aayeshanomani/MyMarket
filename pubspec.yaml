@@ -34,7 +34,9 @@ dependencies:
   location: ^3.0.2
   firebase_core:
   firebase_auth: ^0.15.2
+  cloud_firestore: ^0.13.7
   shared_preferences: ^2.0.5
+  geocoder: ^0.2.1
 
 dev_dependencies:
   flutter_test:

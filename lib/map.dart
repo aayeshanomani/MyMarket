@@ -11,51 +11,41 @@ class Map extends StatefulWidget {
 }
 
 class _MapState extends State<Map> {
-
   LatLng _initialcameraposition = LatLng(20.5937, 78.9629);
   GoogleMapController _controller;
   Location _location = Location();
 
-  void _onMapCreated(GoogleMapController _cntlr)
-    {
-      _controller = _cntlr;
-      _location.onLocationChanged.listen((l) { 
-        setState(() {
-              _initialcameraposition = LatLng(l.latitude, l.longitude);
-            });
-        _controller.animateCamera(
-          CameraUpdate.newCameraPosition(
-            CameraPosition(target: LatLng(l.latitude, l.longitude),zoom: 15),
-            ),
-        );
+  void _onMapCreated(GoogleMapController _cntlr) {
+    _controller = _cntlr;
+    print("location = "+_location.toString());
+    _location.onLocationChanged.listen((l) {
+      setState(() {
+        _initialcameraposition = LatLng(l.latitude, l.longitude);
+        print(l.latitude);
       });
-      
-    }
-
+      _controller.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(target: LatLng(l.latitude, l.longitude), zoom: 15),
+        ),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: Stack(
-          children: [
-            GoogleMap(
-              initialCameraPosition: CameraPosition(target: _initialcameraposition),
-              mapType: MapType.normal,
-              onMapCreated: _onMapCreated,
-              myLocationEnabled: true,
-              markers: [
-                Marker(markerId: MarkerId("01"),
-                position: _initialcameraposition,
-                icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue)
-                )
-              ].toSet(),
-            ),
-          ],
-        ),
-      ),
+    return GoogleMap(
+        initialCameraPosition:
+            CameraPosition(target: _initialcameraposition),
+        mapType: MapType.normal,
+        onMapCreated: _onMapCreated,
+        myLocationEnabled: true,
+        markers: [
+          Marker(
+              markerId: MarkerId("01"),
+              position: _initialcameraposition,
+              icon: BitmapDescriptor.defaultMarkerWithHue(
+                  BitmapDescriptor.hueBlue))
+        ].toSet()
     );
   }
 }

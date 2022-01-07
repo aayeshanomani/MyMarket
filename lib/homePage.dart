@@ -5,6 +5,7 @@ import 'package:mymarket/adminHome.dart';
 import 'package:mymarket/adminLogin.dart';
 import 'package:mymarket/home.dart';
 import 'package:mymarket/map.dart';
+import 'package:mymarket/services/helper.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage();
@@ -14,12 +15,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool userExists;
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  @override
+  void initState() {
+    readyState();
+    // TODO: implement initState
+    super.initState();
   }
 
   static const List<Widget> _widgetOptions = <Widget>[
@@ -39,20 +48,14 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
               child: Icon(FontAwesomeIcons.userCog),
-              onTap: () {
-                FirebaseAuth.instance.currentUser().then((firebaseUser) {
-                  if (firebaseUser == null) {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => AdminLogin()));
-                  } else {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => HomeScreen(
-                                  user: firebaseUser,
-                                )));
-                  }
-                });
+              onTap: () async {
+                if (await FirebaseAuth.instance.currentUser() != null) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()));
+                } else {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AdminLogin()));
+                }
               },
             ),
           ),
@@ -338,5 +341,10 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+
+  Future<void> readyState() async {
+    userExists = await HelperFunc.getUserloggedIn();
+    print(userExists);
   }
 }
