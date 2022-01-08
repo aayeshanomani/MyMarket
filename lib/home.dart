@@ -60,7 +60,7 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                     ),
-                    Text('Graocery',
+                    Text('Grocery',
                         style: TextStyle(
                             color: Color(0xffDB995A),fontSize: 12, fontFamily: 'Noto_Serif')),
                   ],

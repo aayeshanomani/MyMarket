@@ -53,13 +53,13 @@ class _MapState extends State<Map> {
                 for (int i = 0; i < snapshot.data.documents.length; i++)
                   Marker(
                       markerId: MarkerId(i.toString()),
-                      position: _initialcameraposition,
+                      position: LatLng(snapshot.data.documents[i]["shopLat"],snapshot.data.documents[i]["shopLong"]),
                       onTap: () {
                         showMyDialog(
                             context,
                             snapshot.data.documents[i]["shopName"],
-                            snapshot.data.documents[i]["address"],
-                            snapshot.data.documents[i]["name"]);
+                            snapshot.data.documents[i]["shopAddress"],
+                            "\n"+snapshot.data.documents[i]["name"]);
                       },
                       icon: BitmapDescriptor.defaultMarkerWithHue(
                           BitmapDescriptor.hueBlue))
