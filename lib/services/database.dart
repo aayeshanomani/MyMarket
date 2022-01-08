@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Database{
-
+class Database {
   Future<bool> checkUsername(String phoneNumber) async {
     final result = await Firestore.instance
         .collection("users")
@@ -17,5 +16,12 @@ class Database{
         .where('userId', isEqualTo: uid)
         .snapshots();
   }
-  
+
+  getApprovedSellers() {
+    return Firestore.instance
+        .collection("users")
+        .where("type", isEqualTo: "Seller")
+        .where("applicant", isEqualTo: false)
+        .snapshots();
+  }
 }

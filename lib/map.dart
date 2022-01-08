@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:mymarket/services/database.dart';
+import 'package:mymarket/services/widgets.dart';
 
 class Map extends StatefulWidget {
   const Map();
@@ -17,7 +19,7 @@ class _MapState extends State<Map> {
 
   void _onMapCreated(GoogleMapController _cntlr) {
     _controller = _cntlr;
-    print("location = "+_location.toString());
+    print("location = " + _location.toString());
     _location.onLocationChanged.listen((l) {
       setState(() {
         _initialcameraposition = LatLng(l.latitude, l.longitude);
@@ -33,19 +35,35 @@ class _MapState extends State<Map> {
 
   @override
   Widget build(BuildContext context) {
-    return GoogleMap(
-        initialCameraPosition:
-            CameraPosition(target: _initialcameraposition),
-        mapType: MapType.normal,
-        onMapCreated: _onMapCreated,
-        myLocationEnabled: true,
-        markers: [
-          Marker(
-              markerId: MarkerId("01"),
-              position: _initialcameraposition,
-              icon: BitmapDescriptor.defaultMarkerWithHue(
-                  BitmapDescriptor.hueBlue))
-        ].toSet()
-    );
+    return StreamBuilder(
+        stream: Database().getApprovedSellers(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData)
+            return Center(
+                child: CircularProgressIndicator(
+              color: Color(0xffDF3B57),
+            ));
+          return GoogleMap(
+              initialCameraPosition:
+                  CameraPosition(target: _initialcameraposition),
+              mapType: MapType.normal,
+              onMapCreated: _onMapCreated,
+              myLocationEnabled: true,
+              markers: [
+                for (int i = 0; i < snapshot.data.documents.length; i++)
+                  Marker(
+                      markerId: MarkerId(i.toString()),
+                      position: _initialcameraposition,
+                      onTap: () {
+                        showMyDialog(
+                            context,
+                            snapshot.data.documents[i]["shopName"],
+                            snapshot.data.documents[i]["address"],
+                            snapshot.data.documents[i]["name"]);
+                      },
+                      icon: BitmapDescriptor.defaultMarkerWithHue(
+                          BitmapDescriptor.hueBlue))
+              ].toSet());
+        });
   }
 }
