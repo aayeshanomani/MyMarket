@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Database {
   Future<bool> checkUsername(String phoneNumber) async {
@@ -23,5 +24,28 @@ class Database {
         .where("type", isEqualTo: "Seller")
         .where("applicant", isEqualTo: false)
         .snapshots();
+  }
+
+  void uploadProduct(Map<String, dynamic> data) {
+    Firestore.instance
+        .collection("products")
+        .document()
+        .setData(data, merge: true)
+        .then((value) {
+      print("Prod added.");
+    }).catchError((err) {
+      print(err.toString());
+    });
+  }
+
+  getSellerProducts(String uid) {
+    return Firestore.instance
+        .collection("products")
+        .where("uploadedBy", isEqualTo: uid)
+        .snapshots();
+  }
+
+  deleteProd(String docId) {
+    Firestore.instance.collection("products").document(docId).delete();
   }
 }

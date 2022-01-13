@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mymarket/adminProducts.dart';
 import 'package:mymarket/services/database.dart';
 import 'package:mymarket/services/helper.dart';
+import 'package:mymarket/uploadProduct.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -25,7 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return StreamBuilder(
         stream: Database().getDocument(uid),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) return Scaffold(body: Center(child: CircularProgressIndicator()));
+          if (!snapshot.hasData)
+            return Scaffold(body: Center(child: CircularProgressIndicator()));
           return Scaffold(
             appBar: AppBar(
               title: Text("Shop Details"),
@@ -112,210 +114,225 @@ class _HomeScreenState extends State<HomeScreen> {
             drawer: Drawer(
               child: SingleChildScrollView(
                 child: Container(
-                  child: (snapshot.data.documents[0]["applicant"]==false)?
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 200,
-                        child: Image.asset(
-                          "assets/image/tex.jpg",
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          child: Text(
-                            snapshot.data.documents[0]['name'],
-                            textAlign: TextAlign.left,
-                          ),
-                        ),
-                      ),
-                      Divider(
-                        thickness: 3,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AdminProducts()));
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(FontAwesomeIcons.store,
-                                    color: Color(0xff88498F)),
+                  child: (snapshot.data.documents[0]["applicant"] == false)
+                      ? Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: 200,
+                              child: Image.asset(
+                                "assets/image/tex.jpg",
+                                fit: BoxFit.fill,
                               ),
-                              Padding(
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                child: Text(
+                                  snapshot.data.documents[0]['name'],
+                                  textAlign: TextAlign.left,
+                                ),
+                              ),
+                            ),
+                            Divider(
+                              thickness: 3,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AdminProducts()));
+                              },
+                              child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  child: Text(
-                                    "Products",
-                                    style: TextStyle(
-                                        fontSize: 19,
-                                        fontWeight: FontWeight.bold,
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Icon(FontAwesomeIcons.store,
+                                          color: Color(0xff88498F)),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        child: Text(
+                                          "Products",
+                                          style: TextStyle(
+                                              fontSize: 19,
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xff88498F)),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Divider(
+                              thickness: 1,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            UploadProducts()));
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Icon(FontAwesomeIcons.shoppingBag,
+                                          color: Color(0xff88498F)),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        child: Text(
+                                          "Upload Photos",
+                                          style: TextStyle(
+                                              fontSize: 19,
+                                              fontWeight: FontWeight.bold,
+                                              color: Color(0xff88498F)),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Divider(
+                              thickness: 1,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Icon(FontAwesomeIcons.tags,
                                         color: Color(0xff88498F)),
                                   ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Divider(
-                        thickness: 1,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Icon(FontAwesomeIcons.shoppingBag,
-                                  color: Color(0xff88498F)),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                child: Text(
-                                  "Upload Photos",
-                                  style: TextStyle(
-                                      fontSize: 19,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xff88498F)),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Divider(
-                        thickness: 1,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Icon(FontAwesomeIcons.tags,
-                                  color: Color(0xff88498F)),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                child: Text(
-                                  "Upload Offers",
-                                  style: TextStyle(
-                                      fontSize: 19,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xff88498F)),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Divider(
-                        thickness: 1,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Icon(
-                                FontAwesomeIcons.moneyBill,
-                                color: Color(0xff88498F),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                child: Text(
-                                  "Account",
-                                  style: TextStyle(
-                                      fontSize: 19,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color(0xff88498F)),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Divider(
-                        thickness: 1,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Icon(FontAwesomeIcons.phoneAlt,
-                                  color: Color(0xff88498F)),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                child: Text(
-                                  "Update Contact Details",
-                                  style: TextStyle(
-                                      fontSize: 18, color: Color(0xff88498F)),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Divider(
-                        thickness: 1,
-                      ),
-                      GestureDetector(
-                        onTap: () async {
-                          await FirebaseAuth.instance.signOut();
-                          Navigator.pushNamedAndRemoveUntil(
-                              context, "/login", (route) => false);
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(FontAwesomeIcons.signOutAlt,
-                                    color: Color(0xff88498F)),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  child: Text(
-                                    "Log Out",
-                                    style: TextStyle(
-                                        fontSize: 18, color: Color(0xff88498F)),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      child: Text(
+                                        "Upload Offers",
+                                        style: TextStyle(
+                                            fontSize: 19,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xff88498F)),
+                                      ),
+                                    ),
                                   ),
+                                ],
+                              ),
+                            ),
+                            Divider(
+                              thickness: 1,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Icon(
+                                      FontAwesomeIcons.moneyBill,
+                                      color: Color(0xff88498F),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      child: Text(
+                                        "Account",
+                                        style: TextStyle(
+                                            fontSize: 19,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xff88498F)),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Divider(
+                              thickness: 1,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Icon(FontAwesomeIcons.phoneAlt,
+                                        color: Color(0xff88498F)),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      child: Text(
+                                        "Update Contact Details",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: Color(0xff88498F)),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Divider(
+                              thickness: 1,
+                            ),
+                            GestureDetector(
+                              onTap: () async {
+                                await FirebaseAuth.instance.signOut();
+                                Navigator.pushNamedAndRemoveUntil(
+                                    context, "/login", (route) => false);
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Icon(FontAwesomeIcons.signOutAlt,
+                                          color: Color(0xff88498F)),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        child: Text(
+                                          "Log Out",
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              color: Color(0xff88498F)),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                            Divider(
+                              thickness: 1,
+                            ),
+                          ],
+                        )
+                      : Padding(
+                          padding: const EdgeInsets.only(
+                              top: 383.0, left: 27, right: 37),
+                          child: Center(
+                              child: Text(
+                                  "Application needs to be approved to access these fields")),
                         ),
-                      ),
-                      Divider(
-                        thickness: 1,
-                      ),
-                    ],
-                  ):Padding(
-                    padding: const EdgeInsets.only(top: 383.0, left: 27, right: 37),
-                    child: Center(child: Text("Application needs to be approved to access these fields")),
-                  ),
                 ),
               ),
             ),
