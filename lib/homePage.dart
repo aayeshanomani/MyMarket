@@ -233,14 +233,14 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Icon(FontAwesomeIcons.notEqual,
+                        child: Icon(FontAwesomeIcons.utensils,
                             color: Color(0xff88498F)),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
                           child: Text(
-                            "---",
+                            "Restaurants",
                             style: TextStyle(
                                 fontSize: 19,
                                 fontWeight: FontWeight.bold,
